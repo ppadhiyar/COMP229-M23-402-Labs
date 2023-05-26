@@ -18,7 +18,7 @@
     "popper.js": "^1.16.1"
   },
   "description": "Week 3 Lab",
-  "main": "index.js",
+  "main": "server.js",
   "devDependencies": {},
   "repository": {
     "type": "git",
