@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel='stylesheet' href="/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel='stylesheet' href="/@fortawesome/fortawesome-free/css/all.min.css" />
+  <link rel='stylesheet' href='/Content/app.css' />
+</head>
+<body>
+  <main class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <h1><%= title %></h1>
+            <br>
+            <table class="table table-bordered table-striped table-hover">
+                <!-- Header Row -->
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Developer</th>
+                    <th class="text-center">Released</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Price</th>                    
+                </tr>
+
+                <!-- Repeatable Template Row -->
+                <% for(let count = 0; count < GameList.length; count++) { %>
+                    <tr>
+                        <td class="text-center"><%= GameList[count].name %></td>
+                        <td class="text-center"><%= GameList[count].Developer %></td>
+                        <td class="text-center"><%= GameList[count].released %></td>
+                        <td class="text-center"><%= GameList[count].description %></td>
+                        <td class="text-center"><%= GameList[count].price %></td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+  </main>
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/Scripts/app.js"></script>
+</body>
+</html>
