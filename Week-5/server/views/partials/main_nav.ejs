@@ -40,6 +40,14 @@
           <a class="nav-link" href="/services"><i class="fas fa-cogs"></i> Services </a>
         </li>
 
+        <% if (title == "Games") { %>
+        <li class="nav-item active">
+        <% } else  { %>
+        <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href="/game-list"><i class="fas fa-gamepad"></i> Games </a>
+        </li>
+
         <% if (title == "Contact") { %>
         <li class="nav-item active">
         <% } else  { %>
