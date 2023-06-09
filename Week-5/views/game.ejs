@@ -1,0 +1,38 @@
+<%- include partials/header.ejs %>
+
+<%- include partials/main_nav.ejs %>
+  
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <h1><%= title %></h1>
+            <br>
+            <table class="table table-bordered table-striped table-hover">
+                <!-- Header Row -->
+                <tr class="d-flex">
+                    <th class="text-center col-2">Name</th>
+                    <th class="text-center col-2">Developer</th>
+                    <th class="text-center col-1">Released</th>
+                    <th class="col-6">Description</th>
+                    <th class="text-center col-1">Price</th>
+                </tr>
+                <!-- Repeatable Template Row -->
+                <% for(let count = 0; count < GameList.length; count++) { %>
+                    <tr class="d-flex">
+                        <td class="text-center col-2"><%= GameList[count].name %></td>
+                        <td class="text-center col-2"><%= GameList[count].developer %></td>
+                        <td class="text-center col-1"><%= GameList[count].released %></td>
+                        <td class="col-6"><%= GameList[count].description %></td>
+                        <td class="text-center col-1"><%= GameList[count].price %></td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+  </main>
+  
+<%- include partials/bottom_nav.ejs %>  
+
+<%- include partials/footer.ejs %>
