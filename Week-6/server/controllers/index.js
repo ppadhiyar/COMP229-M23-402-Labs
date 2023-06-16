@@ -86,42 +86,72 @@ module.exports.displayRegisterPage = (req, res, next) => {
     }
 };
 
-module.exports.processRegisterPage = (req, res, next) => {
-    // instantiate an user object
-    let newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        displayName: req.body.displayName
-    });
+module.exports.processRegisterPage = async (req, res, next) => {
+    try
+    {
+        const existingUser = await User.findOne(
+            { 
+                email: req.body.email 
+            });
 
-    User.register(newUser, req.body.password, (err) => {
-        if(err)
+        // If a user with email already exists, return an error
+        if (existingUser) 
         {
-            console.log(err);
-            console.log("Error: Inserting New User");
-            if(err.name == "UserExistsError")
-            {
-                req.flash(
-                    'registerMessage',
-                    'Registation Error: User Already Exists!'
-                );
-                console.log('Error: User Already Exists!');
-            }
-            return res.render('auth/register',
+            req.flash(
+                'registerMessage', 
+                'Registration Error: Email already in use!');
+
+            return res.render('auth/register', 
             {
                 title: "Register",
                 messages: req.flash('registerMessage'),
                 displayName: req.user ? req.user.displaName : ''
             });
         }
-        else
+        else 
         {
-            // if registration is successful
-            return passport.authenticate('local')(req, res, () => {
-                res.redirect('/game-list')
+            // instantiate an user object
+            let newUser = new User({
+                username: req.body.username,
+                email: req.body.email,
+                displayName: req.body.displayName
+            });
+
+            User.register(newUser, req.body.password, (err) => {
+                if(err)
+                {
+                    console.log(err);
+                    console.log("Error: Inserting New User");
+                    if(err.name == "UserExistsError")
+                    {
+                        req.flash(
+                            'registerMessage',
+                            'Registation Error: User Already Exists!'
+                        );
+                        console.log('Error: User Already Exists!');
+                    }
+                    return res.render('auth/register',
+                    {
+                        title: "Register",
+                        messages: req.flash('registerMessage'),
+                        displayName: req.user ? req.user.displaName : ''
+                    });
+                }
+                else
+                {
+                    // if registration is successful
+                    return passport.authenticate('local')(req, res, () => {
+                        res.redirect('/game-list')
+                    });
+                }
             });
         }
-    });
+    }
+    catch (err) 
+    {
+        console.log(err);
+        return next(err);
+    }
 };
 
 module.exports.performLogout = (req, res, next) => {
