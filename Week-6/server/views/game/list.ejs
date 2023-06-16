@@ -1,0 +1,50 @@
+<%- include ../partials/header.ejs %>
+
+<%- include ../partials/main_nav.ejs %>
+  
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="row">
+        <div class="offset-md-1 col-md-11">
+            <h1><%= title %></h1>
+            <a href="/game-list/add" class="btn btn-primary" role="button">
+            <i class="fas fa-plus-circle"></i> Add a Game</a>
+            <br>
+            <table class="table table-bordered table-striped table-hover">
+                <!-- Header Row -->
+                <tr class="d-flex">
+                    <th class="text-center col-2">Name</th>
+                    <th class="text-center col-2">Developer</th>
+                    <th class="text-center col-1">Released</th>
+                    <th class="col-4">Description</th>
+                    <th class="text-center col-1">Price</th>
+                    <th class="text-center col-1"></th>
+                    <th class="text-center col-1"></th>
+                </tr>
+                <!-- Repeatable Template Row -->
+                <% for(let count = 0; count < GameList.length; count++) { %>
+                    <tr class="d-flex">
+                        <td class="text-center col-2"><%= GameList[count].name %></td>
+                        <td class="text-center col-2"><%= GameList[count].developer %></td>
+                        <td class="text-center col-1"><%= GameList[count].released %></td>
+                        <td class="col-4"><%= GameList[count].description %></td>
+                        <td class="text-center col-1"><%= GameList[count].price %></td>
+                        <td class="text-center col-1">
+                            <a href="/game-list/edit/<%= GameList[count]._id %>" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pencil-alt"></i> Edit</a>
+                        </td>
+                        <td class="text-center col-1">
+                            <a href="/game-list/delete/<%= GameList[count]._id %>" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Delete</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+  </main>
+  
+<%- include ../partials/bottom_nav.ejs %>  
+
+<%- include ../partials/footer.ejs %>
