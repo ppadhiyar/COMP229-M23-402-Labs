@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Authors -->
+    <div class="col-3 p-2">
+      <button class="btn btn-block btn-outline-primary" (click)='changeAuthor()'>
+        All Authors
+      </button>
+      <button *ngFor='let author of authors'
+        class="btn btn-outline-primary btn-block"
+        [class.active] = 'author == selectedAuthor' (click)='changeAuthor(author)'>
+        {{ author }}
+      </button>
+    </div>
+
+    <!-- Books -->
+    <div class="col-9 p-2">
+      <div *ngFor='let book of books' class="card m-1 p-1 bg-light">
+        <h4>
+          {{ book.name }}
+          <span class="badge badge-pill badge-primary float-right">
+            {{ book.price | currency: 'USD':'symbol':'2.2-2' }}
+          </span>
+        </h4>
+        <div class="card-text bg-white p-1">{{ book.description }}
+          <button class="btn btn-success btn-sm float-right"
+            (click)='addBookToCart(book)'>
+            Add To Cart
+          </button>
+        </div>
+      </div>
+
+      <div class="form-inline float-left mr-1">
+        <select class="form-control" [value]='booksPerPage'
+        (change)='changePageSize($event.target.value)'>
+          <option value="3">3 per Page</option>
+          <option value="4">4 per Page</option>
+          <option value="6">6 per Page</option>
+          <option value="8">8 per Page</option>
+        </select>
+      </div>
+
+      <div class="btn-group float-right">
+        <button *counter='let page of pageCount' (click)='changePage(page)'
+         class="btn btn-outline-primary"
+        [class.active]='page == selectedPage'>
+        {{ page }}
+      </button>
+    </div>
+
+    </div>
+
+  </div>
+</div>

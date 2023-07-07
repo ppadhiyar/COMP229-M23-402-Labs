@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col mt-2">
+      <h2 class="text-center">Your Cart</h2>
+      <table class="table table-bordered table-striped p-2">
+        <thead>
+          <tr>
+            <th>Quantity</th>
+            <th>Book</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Conditional Section -->
+          <tr *ngIf='cart.lines.length == 0'>
+            <td class="text-center" colspan="4">Your cart is empty</td>
+          </tr>
+          <!-- Repeating Section -->
+          <tr *ngFor='let line of cart.lines'>
+            <td>
+              <input type="number" class="form-control-sm" style="width: 5em"
+              [value]='line.quantity'
+              (change)='cart.updateQuantity(line.book, $event.target.value)'>
+            </td>
+            <td>{{ line.book.name }}</td>
+            <td class="text-right">
+              {{ line.book.price | currency: 'USD': 'symbol': '2.2-2'}}
+            </td>
+            <td class="text-right">
+              {{ line.lineTotal | currency: 'USD': 'symbol': '2.2-2'}}
+            </td>
+            <td class="text-center">
+              <a class="btn btn-sm btn-danger"
+                (click)='cart.removeLine(line.book._id)'>
+                Remove
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan='3' class='text-right'>Total: </td>
+            <td class='text-right'>
+              {{ cart.cartPrice | currency: 'USD': 'symbol':'2.2-2'}}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="text-center">
+        <button class="btn btn-primary m-1" routerLink='/book-list'>
+          Continue Shopping
+        </button>
+        <button class="btn btn-secondary m-1" routerLink='/checkout'
+          [disabled]='cart.lines.length == 0'>
+          Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
