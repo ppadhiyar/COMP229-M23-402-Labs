@@ -1,0 +1,35 @@
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th>Published</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let b of getBooks()'>
+      <td>{{ b.name }}</td>
+      <td>{{ b.author }}</td>
+      <td>{{ b.published }}</td>
+      <td>{{ b.description }}</td>
+      <td>{{ b.price | currency: 'USD': 'symbol': '2.2-2'}}</td>
+      <td>
+        <button class="btn btn-sm btn-primary m-1" (click)='editBook(b._id)'>
+          <i class="fas fa-pencil-alt"></i> Edit
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-danger m-1" (click)='deleteBook(b._id)'>
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-primary" (click)='addBook()'>
+  <i class="fas fa-plus-circle"></i> Add New Book
+</button>

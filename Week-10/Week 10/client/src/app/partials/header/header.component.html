@@ -1,0 +1,61 @@
+<!-- Main Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/">COMP229</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" routerLink="/home"><i class="fas fa-lg fa-laptop-house"></i> Home</a>
+      </li>
+
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/about"><i class="fas fa-info-circle"></i> About </a>
+        </li>
+
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/products"><i class="fab fa-elementor"></i> Products </a>
+        </li>
+
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/services"><i class="fas fa-cogs"></i> Services </a>
+        </li>
+
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/book-list"><i class="fas fa-book"></i> Books </a>
+        </li>
+
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/contact"><i class="fas fa-mobile-alt"></i> Contact </a>
+        </li>
+
+        <li *ngIf='isLoggedIn()' class="nav-item ml-5 " [routerLinkActive]="['active']">
+          <a class="nav-link text-warning" routerLink="/admin/main"><i class="fas fa-lg fa-user-shield"></i> Admin </a>
+        </li>
+
+        <li *ngIf='isLoggedIn()'
+            class="navbar-text text-success ml-5 mr-5 d-none d-lg-inline">
+            <i class="fas fa-lg fa-user"></i> Welcome, {{ user.displayName }}
+        </li>
+
+
+        <li *ngIf='isLoggedIn()' class="nav-item">
+          <a (click)='onLogoutClick()' routerLink='/logout' class="nav-link" href="/login">
+            <i class="fas fa-lg fa-sign-out-alt"></i> Logout </a>
+        </li>
+
+        <li *ngIf='!isLoggedIn()' class="nav-item">
+          <a class="nav-link" routerLink="/login"><i class="fas fa-lg fa-sign-in-alt"></i> Login </a>
+        </li>
+
+        <li class="navbar-text">
+          <app-cart-summary></app-cart-summary>
+        </li>
+    </ul>
+
+  </div>
+</nav>
+
