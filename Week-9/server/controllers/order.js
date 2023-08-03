@@ -8,34 +8,29 @@ let Cart = Store.Cart;
 let Book = Store.Book;
 
 module.exports.displayOrderList = (req, res, next) => {
-    Order.find((err, orderList) => {
-        if(err)
-        {
-            return console.error(err);
-        }
-        else
-        {
-            res.json(orderList);
-        }
-    });
-}
+    Order.find()
+        .then(orderList => res.json(orderList))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send(err);
+        });
+};
 
 module.exports.processAddPage = (req, res, next) => {
     // SERIALIZE THE CART DATA
     let cart = new Cart();
 
     // Serialize the Line Data
-    for(let line of req.body.cart.lines)
-    {
+    for (let line of req.body.cart.lines) {
         let book = new Book(
-          line.book._id,
-          line.book.name,
-          line.book.author,
-          line.book.description,
-          line.book.price  
+            line.book._id,
+            line.book.name,
+            line.book.author,
+            line.book.description,
+            line.book.price
         );
         let quantity = line.quantity;
-        cart.lines.push({book, quantity});
+        cart.lines.push({ book, quantity });
     }
     cart.itemCount = req.body.cart.itemCount;
     cart.cartPrice = req.body.cart.cartPrice;
@@ -53,15 +48,10 @@ module.exports.processAddPage = (req, res, next) => {
     });
 
     // Add new Order Object to the Database
-    Order.create(newOrder, (err, Order) => {
-        if(err)
-        {
+    Order.create(newOrder)
+        .then(() => res.json({ success: true, msg: 'Successfully Added New Order' }))
+        .catch(err => {
             console.log(err);
             res.end(err);
-        }
-        else
-        {
-            res.json({success: true, msg: 'Successfully Added New Order'});
-        }
-    }); 
-}
+        });
+};
